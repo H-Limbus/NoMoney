@@ -1,0 +1,35 @@
+检索语法,字段名称,范例
+ip,IP地址及网段,ip: “1.1.1.1/16“
+is_ipv6,搜索ipv4的资产,is_ipv6:“true“
+is_latest,搜索最新的资产,is_latest :“true“
+port,端口,port:“80“
+ports,多端口,"ports:“80,8080,8000“"
+port:>或<,端口范围,port:<80
+port:>=或<=,端口范围,port:[80 TO 1024]
+transport,传输层协议,transport:“tcp“
+asn,自治域号码,asn:“12345“
+org,自治域归属组织名称,"org:“No.31,Jin-rong Street“"
+hostname,主机名,hostname:“50-87-74-222.unifiedlayer.com“
+domain,网站域名,domain:“360.cn“
+os,操作系统部分,os:“Windows“
+service,服务名称,service:“http“
+services,多个服务名称,"services:“rtsp,https,telnet“"
+app,服务产品,app:“Apache“
+version,产品版本,version:“1.2.1“
+response,服务原始响应,response:“奇虎科技“
+cert,SSL\TLS证书信息,cert:“奇虎科技“
+catalog,应用类别,catalog:“IoT物联网“
+type,应用类型,type:“防火墙“
+level,应用层级,level:“硬件设备层“
+vendor,应用生产厂商,vendor:“Sangfor深信服科技股份有限公司“
+country,国家（英文）与国家代码,country:“China“;country:“CN“
+country_cn,国家（中文）,country_cn:“中国“
+province,省份（英文）,province:“Sichuan“
+province_cn,省份（中文）,province_cn:“四川“
+city,城市（英文）,city:“Chengdu“
+city_cn,城市（中文）,city_cn:“成都“
+owner,IP归属单位,owner: “tencent.com“;owner: “清华大学“
+isp,运营商,isp: “联通“
+img_tag,图片标签,img_tag: “windows“
+img_ocr,图片OCR,img_ocr:“admin“
+sys_tag,系统标签,sys_tag:“卫星互联网“

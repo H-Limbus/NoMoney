@@ -1,0 +1,73 @@
+’=,模糊查询，表示查询包含关键词的资产,-
+‘=’=,精确查询，表示查询有且仅有关键词的资产,-
+!=,模糊剔除，表示剔除包含关键词的资产,-
+!==,精确剔除，表示剔除有且仅有关键词的资产,-
+&&、||,多种条件组合查询，&&同and，表示和；||同or，表示或,-
+（）,括号内表示查询优先级最高,-
+ip='1.1.1.1',搜索IP为 ”1.1.1.1”的资产,-
+ip='220.181.111.1/24',搜索起始IP为”220.181.111.1“的C段资产,-
+ip.port='80',搜索开放端口为”80“的资产,-
+ip.country='CN' 或 ip.country='中国',搜索IP对应主机所在国为”中国“的资产,-
+ip.province='江苏',搜索IP对应主机在江苏省的资产,-
+ip.city='北京',搜索IP对应主机所在城市为”北京“市的资产,-
+ip.isp='电信',搜索运营商为”中国电信”的资产,-
+ip.os='Windows',搜索操作系统标记为”Windows“的资产,-
+app='Hikvision 海康威视 Firmware 5.0+' && ip.ports='8000',检索使用了Hikvision且ip开放8000端口的资产,-
+ip.port_count>'2'hot ,搜索开放端口大于2的IP（支持等于、大于、小于）,-
+ip.ports='80' && ip.ports='443',查询开放了80和443端口号的资产,-
+ip.tag='CDN'new hot ,查询包含IP标签'CDN'的资产,-
+ip.tag='CDN'new ,查询包含IP标签'CDN'的资产,-
+web.similar='baidu.com:443',查询与baidu.com:443网站的特征相似的资产,-
+web.similar_icon=='17262739310191283300',查询网站icon与该icon相似的资产,-
+web.similar_id='3322dfb483ea6fd250b29de488969b35',查询与该网页相似的资产,-
+web.tag='登录页面'new ,查询包含资产标签'登录页面'的资产,-
+domain.suffix='qianxin.com',搜索主域为'qianxin.com'的网站,-
+web.icon='22eeab765346f14faf564a4709f98548',查询网站icon与该icon相同的资产,-
+ip.port_count>'2',搜索开放端口大于2的IP（支持等于、大于、小于）,-
+is_web=truenew ,搜索web资产,-
+cert.is_trust=true,搜索证书可信的资产,-
+ip.tag='CDN'hot ,查询包含IP标签'CDN'的资产,-
+is_web=truehot ,搜索web资产,-
+web.tag='登录页面'hot ,查询包含资产标签'登录页面'的资产,-
+web.is_vul=true,查询存在历史漏洞的资产,-
+tls-jarm.hash='21d19d00021d21d21c21d19d21d21da1a818a999858855445ec8a8fdd38eb5',搜索tls-jarm哈希为xxx的资产,-
+is_domain=true,搜索域名标记不为空的资产,-
+domain='qianxin.com',搜索域名包含'qianxin.com'的网站,-
+domain.suffix='qianxin.com'hot ,搜索主域为'qianxin.com'的网站,-
+header.server=='Microsoft-IIS/10',搜索server全名为“Microsoft-IIS/10”的服务器,-
+header.content_length='691',搜索HTTP消息主体的大小为691的网站,-
+header.status_code='402',搜索HTTP请求返回状态码为”402”的资产,-
+header='elastic',搜索HTTP请求头中含有”elastic“的资产,-
+is_web=truenew hot ,搜索web资产,-
+web.title='北京',从网站标题中搜索“北京”,-
+web.body='网络空间测绘',搜索网站正文包含”网络空间测绘“的资产,-
+after='2021-01-01' && before='2021-12-31',搜索2021年的资产,-
+web.similar='baidu.com:443'hot ,查询与baidu.com:443网站的特征相似的资产,-
+web.similar_icon=='17262739310191283300'hot ,查询网站icon与该icon相似的资产,-
+web.icon='22eeab765346f14faf564a4709f98548'hot ,查询网站icon与该icon相同的资产,-
+web.similar_id='3322dfb483ea6fd250b29de488969b35'hot ,查询与该网页相似的资产,-
+web.tag='登录页面'new hot ,查询包含资产标签'登录页面'的资产,-
+icp.number='京ICP备16020626号-8',搜索通过域名关联的ICP备案号为”京ICP备16020626号-8”的网站资产,-
+icp.web_name='奇安信',搜索ICP备案网站名中含有“奇安信”的资产,-
+icp.name='奇安信',搜索ICP备案单位名中含有“奇安信”的资产,-
+icp.type='企业',搜索ICP备案主体为“企业”的资产,-
+protocol='http',搜索协议为”http“的资产,-
+protocol.transport='udp',搜索传输层协议为”udp“的资产,-
+protocol.banner='nginx',查询端口响应中包含'nginx'的资产,-
+app.name='小米 Router',搜索标记为”小米 Router“的资产,-
+app.type='开发与运维',查询包含组件分类为'开发与运维'的资产,-
+app.vendor='PHP',查询包含组件厂商为'PHP'的资产,-
+app.version='1.8.1',查询包含组件版本为'1.8.1'的资产,-
+cert='baidu',搜索证书中带有baidu的资产,-
+cert.subject='qianxin.com',搜索证书使用者是qianxin.com的资产,-
+cert.subject_org='奇安信科技集团股份有限公司',搜索证书使用者组织是奇安信科技集团股份有限公司的资产,-
+cert.issuer='Let's Encrypt Authority X3',搜索证书颁发者是Let's Encrypt Authority X3的资产,-
+cert.issuer_org='Let's Encrypt',搜索证书颁发者组织是Let's Encrypt的资产,-
+cert.sha-1='be7605a3b72b60fcaa6c58b6896b9e2e7442ec50',搜索证书签名哈希算法sha1为xxx的资产,-
+cert.sha-md5='aeedfb3c1c26b90d08537523bbb16bf1',搜索证书签名哈希算法shamd5为xxx的资产,-
+cert.serial_number='35351242533515273557482149369',搜索证书序列号是xxx的资产,-
+cert.is_expired=true,搜索证书已过期的资产,-
+cert.is_trust=truehot ,搜索证书可信的资产,-
+as.number='136800',搜索asn为'136800'的资产,-
+as.name='CLOUDFLARENET',搜索asn名称为'CLOUDFLARENET'的资产,-
+as.org='PDR',搜索asn注册机构为'PDR'的资产,-
