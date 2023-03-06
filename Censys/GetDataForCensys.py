@@ -47,4 +47,10 @@ def GDFCensys():
 
 
 def checkAccount():
-    return True if CensysHosts().account()['login'] == CENSYS_EMAIL else False
+    try:
+        if CensysHosts().account()['login'] == CENSYS_EMAIL:
+            return True
+        else:
+            return False
+    except:
+        return False

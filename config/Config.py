@@ -26,18 +26,18 @@ ZOOMEYE_PASS = ''
 
 
 # qianxin（奇安信）api-key（登录之后就可以获取）
-QIANXIN_API_KEY = '9797e6f7f35a76f2e5370fd5ba5ba00f7196726ee37c6e27d9681951845bcdd2'
+QIANXIN_API_KEY = ''
 
 
 
 # 360_quake 的api（登录之后就可以获取）
-QUAKE_API = '42a48851-beeb-4f0d-ad8c-b99a0acba25f'
+QUAKE_API = ''
 
 
 # censys的api（登录之后就可以获取）
-CENSYS_EMAIL = '2275908981@qq.com'
-CENSYS_API = '76835bbd-bc2f-4318-89a4-8309a403bcad'
-CENSYS_SCRECT = 'Vu32iC6T08XCELn76CnkIMwFtzd4DxEp'
+CENSYS_EMAIL = ''
+CENSYS_API = ''
+CENSYS_SCRECT = ''
 
 
 # 当前的路径
