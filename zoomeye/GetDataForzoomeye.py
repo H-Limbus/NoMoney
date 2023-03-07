@@ -11,12 +11,12 @@ import requests
 from alive_progress import alive_bar
 
 
-def GDFzoomeye():
+def GDFzoomeye(logger):
     try:
         fp = json.loads(open(f'{CURRENT_PATH}/zoomeye/cookies.json', 'r').read())
         cube = open(f'{CURRENT_PATH}/zoomeye/cube.txt', 'r').read()
     except FileNotFoundError:
-        print('zoomeye cookies文件缺失，请更新后再试。')
+        logger.error('zoomeye cookies文件缺失，请更新后再试。')
         exit()
     cookies = '; '.join([item["name"] + "=" + item["value"] for item in fp])
     headers = {
@@ -37,14 +37,14 @@ def GDFzoomeye():
     }
     url = 'https://www.zoomeye.org/api/search?q={}&page={}&pageSize=20&t=v4+v6+web'
     SearchSyntax = urllib.parse.quote(input('请输入需要查询的zoomeye语法：'))
-    print('\n\n')
+    print('\n')
     session = requests.Session()
     with alive_bar(20, title="获取中", bar="circles") as bar:
         for i in range(1, 21):
             data = []
             page = session.get(url.format(SearchSyntax, str(i)), headers=headers)
             if page.json()["status"] == 401:
-                print('zoomeye cookies过期，请更新后再查询！')
+                logger.info('zoomeye cookies 过期，请更新后再查询！')
                 break
             else:
                 for _ in page.json()['matches']:

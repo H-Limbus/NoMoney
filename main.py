@@ -18,29 +18,40 @@ from Censys.GetDataForCensys import GDFCensys
 
 
 def run():
-    start = time.time()
-    PrintLogo()
-    args = Parse()
-    # print(args)
-    ConfirmedSet = [i for i in PLATES if args[i]]
-    if args['rules'] or args['UpdateCookie']:
-        if args['rules']:
-            PrintRule(ConfirmedSet)
-        if args['UpdateCookie']:
-            UpdAPI(ConfirmedSet)
-    else:
-        from reports.checkfile import checkFile
+    try:
+        start = time.time()
+        PrintLogo()
+        args = Parse()
+        ConfirmedSet = [i for i in PLATES if args[i]]
+        if args['rules'] or args['UpdateCookie']:
+            if args['rules']:
+                PrintRule(ConfirmedSet)
+            if args['UpdateCookie']:
+                UpdAPI(ConfirmedSet)
+        else:
+            from reports.checkfile import checkFile
 
-        outputPath, outputFileFormat = checkFile(args['output']), args['format']
+            outputPath, outputFileFormat = checkFile(args['output']), args['format']
 
-        for name in ConfirmedSet:
-            # if name in ['qianxin', '360quake']:
-            #     pass
-            # else:
-            data = globals()['GDF'+name]()
-            from reports import base
-            base.BaseSaveData(outputPath, data, outputFileFormat)
-    print(time.time() - start)
+            for name in ConfirmedSet:
+
+                from config.log import MyLogger
+
+                logger = MyLogger().Log()
+                data = globals()['GDF'+name](logger)
+
+                from reports import base
+
+                base.BaseSaveData(outputPath, data, outputFileFormat, logger)
+
+        print(time.time() - start)
+    except KeyboardInterrupt:
+
+        from config.log import MyLogger
+
+        logger = MyLogger().Log()
+        logger.error("程序意外中止！")
+
 
 
 

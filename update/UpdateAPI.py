@@ -11,8 +11,10 @@ import ddddocr
 import psutil
 from pyppeteer import launch
 from config.Config import *
-# from update.OpenCVGetLen import OffsetGet
-# from decodeCR.SlideDecodeLength import restore_picture
+from config.log import MyLogger
+
+
+logger = MyLogger().Log()
 
 
 async def GetBrowser(name):
@@ -29,9 +31,10 @@ async def GetBrowser(name):
 
 
 def UpdAPI(ConfirmedSet):
+
     for i in ConfirmedSet:
         if i in ['censys', 'qianxin', '360quake']:
-            print(f'{i}平台不需要更新。')
+            logger.info(f' {i} 平台不需要更新。')
             continue
         else:
             page = asyncio.get_event_loop().run_until_complete(GetBrowser(i))
@@ -40,19 +43,13 @@ def UpdAPI(ConfirmedSet):
 
 async def Updfofa(page):
     await page.goto('https://fofa.info/')
-    print(await page.title())
     await asyncio.sleep(2)
     try:
         await page.click('.logoBtn')
-        # if 'FOFA网络空间测绘系统' in await page.title():
-        #     with open(f'{CURRENT_PATH}\\fofa\\cookies.json', 'w') as f:
-        #         f.write(json.dumps(await page.cookies()))
-        #     print('fofa 的cookie 已经更新完成！')
-        #     return
     except:
         with open(f'{CURRENT_PATH}\\fofa\\cookies.json', 'w') as f:
             f.write(json.dumps(await page.cookies()))
-        print('fofa 的cookie 还没有过期！')
+        logger.error(' fofa 的 cookie 还没有过期！')
         await page.close()
         return True
     await asyncio.sleep(2)
@@ -72,7 +69,7 @@ async def Updfofa(page):
     while 1:
         try:
             if 'FOFA网络空间测绘系统' not in await page.title():
-                print('验证码识别错误，重新识别！')
+                logger.error('验证码识别错误，重新识别！')
                 await asyncio.sleep(2)
                 await page.type('#password', FOFA_PASS)
                 getOcr = await page.J('#captcha_image')
@@ -85,13 +82,14 @@ async def Updfofa(page):
                 continue
             else:
                 break
-        except:
+        except Exception as e:
+            logger.error(e)
             break
-    # os.remove(f'{CURRENT_PATH}/temp/TempFofaOCR.png')
+    os.remove(f'{CURRENT_PATH}/temp/TempFofaOCR.png')
     await asyncio.sleep(4)
     with open(f'{CURRENT_PATH}\\fofa\\cookies.json', 'w') as f:
         f.write(json.dumps(await page.cookies()))
-    print('fofa 的cookie 已经更新完成！')
+    logger.info(' fofa 的 cookie 已经更新完成！')
 
 
 async def Updzoomeye(page):
@@ -137,7 +135,7 @@ async def Updzoomeye(page):
             i -= 1
             continue
         elif tags.strip() == '请输入正确的验证码。' and i < 0:
-            print('验证码识别错误，重新输入！')
+            logger.info('验证码识别错误，请手动输入！')
             ca = await page.J('.captcha')
             await ca.screenshot(path=f'{CURRENT_PATH}/temp/TempZoomeyeOCR.png')
             Image.open(f'{CURRENT_PATH}/temp/TempZoomeyeOCR.png').show()
@@ -154,7 +152,7 @@ async def Updzoomeye(page):
     await asyncio.sleep(2)
     with open(f'{CURRENT_PATH}\\zoomeye\\cookies.json', 'w') as f:
         f.write(json.dumps(await page.cookies()))
-    print('zoomeye 的cookie 已经更新完成！')
+    logger.info(' zoomeye 的 cookie 已经更新完成！')
 
 
 def DecodeOCR(n):

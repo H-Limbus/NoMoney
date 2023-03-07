@@ -7,13 +7,13 @@ import json
 import csv
 
 
-def BaseSaveData(outputPath, data, outputFileFormat):
+def BaseSaveData(outputPath, data, outputFileFormat, logger):
     if outputFileFormat in ['txt', 'json', 'csv']:
         globals()[outputFileFormat+'Save'](outputPath, data)
     else:
-        print('你输入的格式有误，已自动保存为默认格式（txt）。')
+        logger.info('你输入的格式有误，已自动保存为默认格式（txt）。')
         txtSave(outputPath, data)
-    print(f'\n\n文件已保存，路径为  >>>>>>>>>   {outputPath}\n')
+    logger.info(f'文件已保存，路径为 --->> {outputPath}')
 
 
 def txtSave(outputPath, data):

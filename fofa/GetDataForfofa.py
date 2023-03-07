@@ -6,18 +6,18 @@
 
 import json
 import base64
-from config.Config import CURRENT_PATH
-from lxml import etree
 import requests
+from lxml import etree
 from alive_progress import alive_bar
+from config.Config import CURRENT_PATH
 
 
-def GDFfofa():
+def GDFfofa(logger):
     try:
         with open(f'{CURRENT_PATH}\\fofa\\cookies.json', 'r') as f:
             fp = json.loads(f.read())
     except FileNotFoundError:
-        print('fofa cookies文件缺失，请更新后再试。')
+        logger.error('fofa cookies文件缺失，请更新后再试。')
         exit()
     cookies = '; '.join([item["name"] + "=" + item["value"] for item in fp])
     headers = {
@@ -38,15 +38,13 @@ def GDFfofa():
     }
     url = 'https://fofa.info/result?qbase64={}&page={}&page_size=10'
     SearchSyntax = base64.b64encode(input('请输入需要查询的fofa语法：').encode()).decode()
-    print('\n\n')
     session = requests.Session()
     with alive_bar(6, title="获取中", bar="circles") as bar:
         for i in range(1, 7):
             page = session.get(url.format(SearchSyntax, str(i)), headers=headers)
             if page.status_code == 502:
-                print('fofa cookies过期，请更新后再查询！')
+                logger.error('fofa 的 cookies 过期，请更新后再查询！')
             else:
-                # print(page)
                 html = etree.HTML(page.text).xpath('//*[contains(@class, "hsxa-host")]/a/@href')
                 yield html
             bar()

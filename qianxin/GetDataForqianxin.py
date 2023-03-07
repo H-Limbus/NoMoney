@@ -11,14 +11,14 @@ from math import ceil
 from alive_progress import alive_bar
 
 
-def GDFqianxin():
+def GDFqianxin(logger):
     session = requests.Session()
     searchDate = ''
     searchSyntax = base64.urlsafe_b64encode(input('请输入qianxin 查询语法：').encode("utf-8")).decode('utf-8')
     print('''
         按照序号选择查询数据的时间节点（默认一年以内）
-        1、一个月以内
-        2、半年以内
+            1、一个月以内
+            2、半年以内
     ''')
     s = input('请输入选择的序号（要是选择默认，直接回车）：')
     if s == '1': searchDate = ageOneMonthDate
@@ -32,18 +32,17 @@ def GDFqianxin():
     else:
         totalCount = page['data']['total']
         restQuota = page['data']['rest_quota'].replace('今日剩余积分：', '')
-        print(f'您查询的语法共有{totalCount}条，今日剩余积分有{restQuota}分。\n')
+        logger.info(f'您查询的语法共有{totalCount}条，今日剩余积分有{restQuota}分。')
         while 1:
             getDataCount = input(f'查询1条数据1积分，获得全部资源需要{totalCount}分，您需要多少条数据，(退出输入q)：')
-            print('\n\n')
-            if getDataCount == 'q': break
+            if getDataCount == 'q': exit()
             if int(getDataCount) <= 10:
                 data = page['data']['arr']
                 sumData = []
                 for i in data:
                     sumData.append(i['ip'] + ':' + str(i['port']))
                 yield sumData
-                print('今日剩余积分： ' + page['data']['rest_quota'])
+                logger.info('今日剩余积分： ' + page['data']['rest_quota'])
                 break
             elif int(getDataCount) <= int(restQuota):
                 data = page['data']['arr']
@@ -61,13 +60,13 @@ def GDFqianxin():
                             for i in html['data']['arr']:
                                 sumData.append(i['ip'] + ':' + str(i['port']))
                         except:
-                            print(html['message'])
+                            logger.info(html['message'])
                         yield sumData
                         bar()
                 break
             elif int(getDataCount) > int(restQuota):
-                print(f'您今日积分不够查询{getDataCount}条数据。请重新输入!')
+                logger.error(f'您今日积分不够查询{getDataCount}条数据。请重新输入!')
             else:
-                print('输入有误，请重新输入!')
+                logger.error('输入有误，请重新输入!')
 
 

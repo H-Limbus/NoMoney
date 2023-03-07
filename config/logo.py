@@ -79,4 +79,5 @@ NoMoney_fonts = [
 
 
 def PrintLogo():
-    print(random.choice(NoMoney_fonts)+'\n\n')
+    print(random.choice(NoMoney_fonts))
+    print('\033[1;35mNoMoney running: \033[0m')
