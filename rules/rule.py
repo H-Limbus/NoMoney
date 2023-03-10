@@ -4,6 +4,13 @@
 # @Author  :  Limbus
 # @file    :  rule.py
 
+"""
+Used to print search syntax rules for various platforms
+
+There are also some search syntax of shodan, but the api
+of shodan has not been incorporated into the project,because
+the number of free queries of shodan in a day is too small.
+"""
 
 from prettytable import from_csv
 from config.Config import CURRENT_PATH
