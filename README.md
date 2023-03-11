@@ -27,7 +27,7 @@ NoMoney 是一款信息收集的工具，其中集成了fofa，zoomeye(钟馗之
 |            [fofa](https://fofa.info/)             |       ❌       |  注册用户使用网页<b>每次</b>可以免费查看前 <b>60</b> 条数据  |
 |  [zoomeye (钟馗之眼)](https://www.zoomeye.org/)   |       ✔       | 网页浏览<b>每次</b>可以看前<b>400</b>条数据，API <b>每月</b>支持查询<b>10000</b>条数据，且网页与API 互不关联 |
 | [qianxin (鹰图平台)](https://hunter.qianxin.com/) |       ✔       | API <b>每日</b>支持查询 <b>500</b> 条数据，但网页查询也会扣除积分 |
-|                      censys                       |       ✔       | API<b>每月</b>支持查询<b>250</b>条数据，但网页查询也会扣除积分 |
+| [censys](https://search.censys.io/)              |       ✔       | API<b>每月</b>支持查询<b>250</b>条数据，但网页查询也会扣除积分 |
 |  [360uake](https://quake.360.net/quake/#/index)   |       ✔       |       API 每月支持<b>3000</b>条数据，网页查询不扣积分        |
 
 ## 项目模块
@@ -130,8 +130,9 @@ CURRENT_PATH = os.getcwd()
 ```shell
 使用 python NoMoney.py -fr  或者  -f -r 
 ```
+![图片](https://user-images.githubusercontent.com/85352537/224474391-7e5e5e26-5334-4409-b616-f7ab4e387bd6.png)
 
-![image-20230311145547420](C:\Users\Limbus\AppData\Roaming\Typora\typora-user-images\image-20230311145547420.png)
+
 
 - 更新 fofa 和 zoomeye 的cookies ：
 
