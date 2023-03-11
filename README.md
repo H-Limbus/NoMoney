@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NoMoeny
 
 ------
@@ -173,3 +174,6 @@ thanks to [sml2h3](https://github.com/sml2h3) for ddddocr
 ## License
 
 <img alt="GitHub" src="https://img.shields.io/github/license/jorhelp/Ingram">
+=======
+# NoMoney
+>>>>>>> 979fec5ab4ed6a507f9205370616cde585445cb0
