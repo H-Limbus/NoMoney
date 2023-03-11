@@ -3,6 +3,11 @@
 # @Author  :  Limbus
 #  @file   :  GetDataForcensys.py
 
+"""
+use the official tool of censys to query information
+"""
+
+
 import os
 from censys.search import CensysHosts
 from config.Config import (CENSYS_EMAIL, CENSYS_API, CENSYS_SCRECT)
@@ -10,19 +15,21 @@ from alive_progress import alive_bar
 
 
 def GDFCensys(logger):
+
+    # check whether to update api and screct
+
     if checkAccount():
-        # (hikvision) and location.country=`China`
         newCensys = CensysHosts()
         quota = newCensys.quota()
         restQuota = str(quota['allowance'] - quota['used'])
-        logger.info(f'您的剩余积分有{restQuota}分。')
+        logger.info(f'your remaining quota: {restQuota}.')
         while 1:
-            searchSyntax = input('请输入 censys 查询语法：')
-            getDataCount = input(f'查询1条数据1积分，您需要多少条数据，(退出输入q)：')
+            searchSyntax = input('input censys search syntax: ')
+            getDataCount = input('1 data = 1 quota, how much data do you need(q exit): ')
             print('\n')
             if getDataCount == 'q': break
             if int(getDataCount) <= int(restQuota):
-                with alive_bar(unknown="stars", title="获取中") as bar:
+                with alive_bar(unknown="stars", title="getting") as bar:
                     query = newCensys.search(searchSyntax, page=1, per_page=int(getDataCount))
                     for i, k in query.view_all().items():
                         sumData = []
@@ -32,17 +39,19 @@ def GDFCensys(logger):
                         bar()
                 break
             elif int(getDataCount) > int(restQuota):
-                logger.info(f'您今日积分不够查询{getDataCount}条数据。请重新输入!')
+                logger.info(f'your quota are not enough to query {getDataCount} data. Try again! ')
             elif not getDataCount.isdigit():
-                logger.error('输入有误，请重新输入!')
+                logger.error('input error, Try again! ')
     else:
-        logger.error('censys的api已经更改，正在更新！')
+
+        # api lose efficay or changed, try setting again
+        logger.error("censys's api or screct changed, updating...")
         osPopen = os.popen("censys config", "w")
         try:
             osPopen.write(CENSYS_API + "\n" + CENSYS_SCRECT + "\nn\n")
-            logger.info('更新完毕！')
+            logger.info('Updated successful! ')
         except:
-            logger.error('更新失败，censys 的api 不正确，请重新获取！')
+            logger.error('Updated failed, api wrong, please reacquire! ')
 
 
 def checkAccount():
