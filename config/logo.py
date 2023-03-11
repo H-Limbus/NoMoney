@@ -1,7 +1,7 @@
 #    -*- coding: utf-8 -*-
 #  @Date   :  2022-12-31 15:13:14
-# @Author  :  Limbus-E.Horus
-#  @file   :  $0.py
+# @Author  :  Limbus
+#  @file   :  logo.py
 
 
 import random

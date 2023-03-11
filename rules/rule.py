@@ -20,6 +20,7 @@ def PrintRule(ConfirmedSet):
     for i in ConfirmedSet:
         fp = open(f'{CURRENT_PATH}/rules/{i}.csv', 'r')
         print('\n'+'-|'*50+'\n')
-        print(f'{i}的搜索语法规则：'.center(10)+'\n')
+        print(f'{i} search syntax rules: '.center(10)+'\n')
         print(from_csv(fp))
+        fp.close()
 
