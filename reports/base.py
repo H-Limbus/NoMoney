@@ -11,24 +11,29 @@ def BaseSaveData(outputPath, data, outputFileFormat, logger):
     if outputFileFormat in ['txt', 'json', 'csv']:
         globals()[outputFileFormat+'Save'](outputPath, data)
     else:
-        logger.info('你输入的格式有误，已自动保存为默认格式（txt）。')
+        logger.error('The file format you entered is incorrect, auto-saved default format (txt).')
         txtSave(outputPath, data)
-    logger.info(f'文件已保存，路径为 --->> {outputPath}')
+    logger.info(f'file saved !  --->> {outputPath}')
 
 
 def txtSave(outputPath, data):
     fp = open(outputPath, 'a+')
-    for _ in data:
-        for i in _:
-            fp.write(i.strip() + '\n')
+    for i in data:
+        for _ in i:
+            if 'https://' in _ or 'http://' in _:
+                _ = _.replace('https://', '').replace('http://', '')
+                fp.write(_.strip() + '\n')
+            else:
+                fp.write(_.strip() + '\n')
+    fp.close()
 
 
 def jsonSave(outputPath, data):
     fp = open(outputPath, 'a+')
     for i in data:
         for _ in i:
-            if 'https://' in i or 'http://' in i:
-                i = i.replace('https://', '').replace('http://', '')
+            if 'https://' in _ or 'http://' in _:
+                _ = _.replace('https://', '').replace('http://', '')
             if ':' in _:
                 the = _.split(':')
                 fp.write(json.dumps({'ip': the[0], 'port': the[1]}) + ',\n')
@@ -43,13 +48,13 @@ def csvSave(outputPath, data):
     with open(outputPath, mode="w", encoding="utf-8", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(header_list)
-        for _ in data:
-            for i in _:
-                if 'https://' in i or 'http://' in i:
-                    i = i.replace('https://', '').replace('http://', '')
-                if ':' in i:
-                    the = i.split(':')
+        for i in data:
+            for _ in i:
+                if 'https://' in _ or 'http://' in _:
+                    _ = _.replace('https://', '').replace('http://', '')
+                if ':' in _:
+                    the = _.split(':')
                     data_list.append([the[0], the[1]])
                 else:
-                    data_list.append([i, '80'])
+                    data_list.append([_, '80'])
         writer.writerows(data_list)

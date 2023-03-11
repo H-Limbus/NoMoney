@@ -15,7 +15,7 @@ def checkFile(outputPath):
 
 def whetherFileExist(outputPath):
     if os.path.exists(outputPath):
-        whetherCover = input('文件已经存在，是否覆盖？（y or n 不覆盖直接退出, 默认不覆盖）：')
+        whetherCover = input('file existed! whether to overwrite（y or n, default no）：')
         if whetherCover == 'y':
             open(outputPath, 'w').close()
             return True
@@ -27,7 +27,7 @@ def whetherFileExist(outputPath):
 
 def createFilePath(outputPath):
     if '/' in outputPath and '\\' in outputPath:
-        logger.error('文件路径输入有误！')
+        logger.error('file path error! ')
         return
     elif '//' or '\\' in outputPath:
         outputPath = outputPath.replace('\\', '/').replace('//', '/').split('/')
