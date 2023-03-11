@@ -27,7 +27,7 @@ def GDFqianxin(logger):
             2、half year
 
     ''')
-    s = input('input the time you choose(default Enter): ')
+    s = input('input the time node (default Enter): ')
     if s == '1': searchDate = ageOneMonthDate
     elif s == '2': searchDate = ageHalfYearDate
     else: searchDate = DEFAULT_START_TIME
@@ -41,7 +41,7 @@ def GDFqianxin(logger):
         restQuota = page['data']['rest_quota'].replace('今日剩余积分：', '')
         logger.info(f'There are {totalCount}t data，rest quota: {restQuota}.')
         while 1:
-            getDataCount = input(f'1 data = 1 quota, how much data you need (q exit):')
+            getDataCount = input('1 data = 1 quota, how much data you need (q exit):')
             if getDataCount == 'q': exit()
             if int(getDataCount) <= 10:
                 data = page['data']['arr']
