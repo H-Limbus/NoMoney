@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # NoMoeny
 
 ------
@@ -65,7 +64,7 @@ pip3 install -r requirements.txt
 
 - 使用 -h 或者 --help 来查看相关功能
 
-```bash
+```python
         ___           ___           ___           ___           ___           ___
        /__/\         /  /\         /__/\         /  /\         /__/\         /  /\          ___
        \  \:\       /  /::\       |  |::\       /  /::\        \  \:\       /  /:/_        /__/|
@@ -174,6 +173,4 @@ thanks to [sml2h3](https://github.com/sml2h3) for ddddocr
 ## License
 
 <img alt="GitHub" src="https://img.shields.io/github/license/jorhelp/Ingram">
-=======
-# NoMoney
->>>>>>> 979fec5ab4ed6a507f9205370616cde585445cb0
+
