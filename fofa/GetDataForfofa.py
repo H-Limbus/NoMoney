@@ -3,6 +3,9 @@
 # @Author  :  Limbus
 #  @file   :  GetDataForfofa.py
 
+"""
+use crawlers to collect data, and update the cookies.
+"""
 
 import json
 import base64
@@ -14,10 +17,13 @@ from config.Config import CURRENT_PATH
 
 def GDFfofa(logger):
     try:
+
+        # get the lastest cookies from fofa's cookies files
+
         with open(f'{CURRENT_PATH}\\fofa\\cookies.json', 'r') as f:
             fp = json.loads(f.read())
     except FileNotFoundError:
-        logger.error('fofa cookies文件缺失，请更新后再试。')
+        logger.error("fofa's cookies.json is missing, please try again after get it! ")
         exit()
     cookies = '; '.join([item["name"] + "=" + item["value"] for item in fp])
     headers = {
@@ -37,13 +43,13 @@ def GDFfofa(logger):
         'Cache-Control': 'no-cache'
     }
     url = 'https://fofa.info/result?qbase64={}&page={}&page_size=10'
-    SearchSyntax = base64.b64encode(input('请输入需要查询的fofa语法：').encode()).decode()
+    SearchSyntax = base64.b64encode(input('input fofa search syntax: ').encode()).decode()
     session = requests.Session()
-    with alive_bar(6, title="获取中", bar="circles") as bar:
+    with alive_bar(6, title="getting", bar="circles") as bar:
         for i in range(1, 7):
             page = session.get(url.format(SearchSyntax, str(i)), headers=headers)
             if page.status_code == 502:
-                logger.error('fofa 的 cookies 过期，请更新后再查询！')
+                logger.error("fofa's cookies lose efficacy, please reacquire.")
             else:
                 html = etree.HTML(page.text).xpath('//*[contains(@class, "hsxa-host")]/a/@href')
                 yield html
