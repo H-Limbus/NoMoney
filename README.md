@@ -46,13 +46,13 @@ NoMoney 是一款信息收集的工具，其中集成了fofa，zoomeye(钟馗之
 
 - 克隆该仓库:
 
-```bash
+```shell
 git clone https://github.com/H-Limbus/NoMoney.git
 ```
 
 - 安装依赖（安装依赖之前切记更换国内镜像源，否则会特别慢）：
 
-```bash
+```shell
 pip3 install -r requirements.txt
 ```
 
@@ -64,7 +64,7 @@ pip3 install -r requirements.txt
 
 - 使用 -h 或者 --help 来查看相关功能
 
-```python
+```shell
         ___           ___           ___           ___           ___           ___
        /__/\         /  /\         /__/\         /  /\         /__/\         /  /\          ___
        \  \:\       /  /::\       |  |::\       /  /::\        \  \:\       /  /:/_        /__/|
@@ -127,7 +127,7 @@ CURRENT_PATH = os.getcwd()
 
 - 我们可以查看不同平台的搜索语法规则：
 
-```bash
+```shell
 使用 python NoMoney.py -fr  或者  -f -r 
 ```
 
@@ -135,7 +135,7 @@ CURRENT_PATH = os.getcwd()
 
 - 更新 fofa 和 zoomeye 的cookies ：
 
-```bash
+```shell
 python3 NoMoney.py -fU  或者  -zU
 # 网页会自动进行更新，会自动识别所要填的验证码
 # fofa 的验证码识别率较高，但是zoomeye 识别率很低，所以在识别错误几次之后会弹出验证码进行手动输入，这确保在无头模式下也可以手动输入
@@ -144,13 +144,13 @@ python3 NoMoney.py -fU  或者  -zU
 
 - 获取数据：
 
-```bash
+```shell
 python NoMoney.py -f 或者 -z 或者 -q 或者 -3 或者 -c 或者 -fzq3c （多平台查询）
 ```
 
 - 保存数据，可选择三种格式（txt  csv  json ，默认为 txt ）：
 
-```bash
+```shell
 python NoMoney.py -f -o filepath --format=txt
 ```
 
