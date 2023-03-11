@@ -4,22 +4,27 @@
 #  @file   :  GetDataFor360quake.py
 
 
-from config.Config import (QUAKE_API, DEFAULT_START_TIME, DEFAULT_END_TIME, ageHalfYearDate, ageOneMonthDate)
 import requests
 from alive_progress import alive_bar
+from config.Config import (QUAKE_API, DEFAULT_START_TIME, DEFAULT_END_TIME, ageHalfYearDate, ageOneMonthDate)
 
 
 def GDF360quake(logger):
+
+    # 360quake user information query
     url = "https://quake.360.cn/api/v3/search/quake_service"
     headers = {"X-QuakeToken": QUAKE_API, "Content-Type": "application/json"}
     restCredit = int(requests.get("https://quake.360.net/api/v3/user/info", headers=headers).json()['data']['month_remaining_credit'])
-    searchSyntax = input('请输入360_quake 查询语法：')
+    
+    searchSyntax = input('ipnut 360-quake search syntax:  ')
     print('''
-            按照序号选择查询数据的时间节点（默认一年以内）
-                1、一个月以内
-                2、半年以内
-        \n''')
-    s = input('请输入选择的序号（要是选择默认，直接回车）：')
+            select time node (default is within one year)
+
+                1、one month
+                2、half year
+
+    ''')
+    s = input('input the time node (default Enter): ')
     if s == '1': searchDate = ageOneMonthDate
     elif s == '2': searchDate = ageHalfYearDate
     else: searchDate = DEFAULT_START_TIME
@@ -34,9 +39,9 @@ def GDF360quake(logger):
     page = RequestsRes(url, headers, data)
     if page:
         totalCount = page['meta']['pagination']['total']
-        logger.info(f'您查询的语法共有{totalCount}条，您本月剩余积分:{str(restCredit)}')
+        logger.info(f'There are {totalCount}t data, rest quota{str(restCredit)}')
         while 1:
-            getDataCount = input(f'查询1条数据1积分，获得全部需要{totalCount}分，您需要多少条数据，(退出输入q)：')
+            getDataCount = input('1 data = 1 quota, how much data you need (q exit): ')
             print('\n')
             if getDataCount == 'q': exit()
             if int(getDataCount) <= 10:
@@ -45,7 +50,7 @@ def GDF360quake(logger):
                     bar()
                 break
             elif int(getDataCount) <= restCredit:
-                with alive_bar(unknown="stars", title="获取中") as bar:
+                with alive_bar(unknown="stars", title="getting") as bar:
                     yield [(i['ip'] + ':' + str(i['port'])) for i in page['data']]
                     sumData = []
                     data['size'] = getDataCount
@@ -57,9 +62,9 @@ def GDF360quake(logger):
                     yield sumData
                 break
             elif int(getDataCount) > restCredit:
-                logger.error(f'您这个月的积分不够查询{getDataCount}条数据。请重新输入!')
+                logger.error(f'the remaining quota month are not enough to query {getDataCount}t data, try again! ')
             else:
-                logger.error('输入有误，请重新输入!')
+                logger.error('input error, try again! ')
 
 
 def RequestsRes(url, headers, data, logger):

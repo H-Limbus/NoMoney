@@ -3,20 +3,26 @@
 # @Author  :  Limbus
 #  @file   :  GetDataForzoomeye.py
 
+"""
+use the crawler to obtain the data of zoomeye, the zoomeye's api mode has
+not been completed. I'll finish it soon.
+"""
 
 import json
-import urllib.parse
-from config.Config import (CURRENT_PATH)
 import requests
+import urllib.parse
 from alive_progress import alive_bar
+from config.Config import (CURRENT_PATH)
 
 
 def GDFzoomeye(logger):
+
+    # get zoomeye's cookies and cube
     try:
         fp = json.loads(open(f'{CURRENT_PATH}/zoomeye/cookies.json', 'r').read())
         cube = open(f'{CURRENT_PATH}/zoomeye/cube.txt', 'r').read()
     except FileNotFoundError:
-        logger.error('zoomeye cookies文件缺失，请更新后再试。')
+        logger.error("zoomeye's cookies files not exist, try again after update.")
         exit()
     cookies = '; '.join([item["name"] + "=" + item["value"] for item in fp])
     headers = {
@@ -36,15 +42,15 @@ def GDFzoomeye(logger):
         'Cache-Control': 'no-cache'
     }
     url = 'https://www.zoomeye.org/api/search?q={}&page={}&pageSize=20&t=v4+v6+web'
-    SearchSyntax = urllib.parse.quote(input('请输入需要查询的zoomeye语法：'))
+    SearchSyntax = urllib.parse.quote(input("input zoomeye's search syntax: "))
     print('\n')
     session = requests.Session()
-    with alive_bar(20, title="获取中", bar="circles") as bar:
+    with alive_bar(20, title="getting", bar="circles") as bar:
         for i in range(1, 21):
             data = []
             page = session.get(url.format(SearchSyntax, str(i)), headers=headers)
             if page.json()["status"] == 401:
-                logger.info('zoomeye cookies 过期，请更新后再查询！')
+                logger.info("zoomeye's cookies lose efficacy, try again after update.")
                 break
             else:
                 for _ in page.json()['matches']:
