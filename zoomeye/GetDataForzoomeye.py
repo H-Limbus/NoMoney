@@ -12,15 +12,14 @@ import json
 import requests
 import urllib.parse
 from alive_progress import alive_bar
-from config.Config import (CURRENT_PATH)
+from config.Config import CURRENT_PATH
 
 
 def GDFzoomeye(logger):
-
-    # get zoomeye's cookies and cube
+	# get zoomeye's cookies and cube
     try:
-        fp = json.loads(open(f'{CURRENT_PATH}/zoomeye/cookies.json', 'r').read())
-        cube = open(f'{CURRENT_PATH}/zoomeye/cube.txt', 'r').read()
+        fp = json.loads(open(f'{CURRENT_PATH}\\zoomeye\\cookies.json', 'r').read())
+        cube = open(f'{CURRENT_PATH}\\zoomeye\\cube.txt', 'r').read()
     except FileNotFoundError:
         logger.error("zoomeye's cookies files not exist, try again after update.")
         exit()

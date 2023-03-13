@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # NoMoeny
 
 ------
@@ -28,7 +27,7 @@ NoMoney 是一款信息收集的工具，其中集成了fofa，zoomeye(钟馗之
 |            [fofa](https://fofa.info/)             |       ❌       |  注册用户使用网页<b>每次</b>可以免费查看前 <b>60</b> 条数据  |
 |  [zoomeye (钟馗之眼)](https://www.zoomeye.org/)   |       ✔       | 网页浏览<b>每次</b>可以看前<b>400</b>条数据，API <b>每月</b>支持查询<b>10000</b>条数据，且网页与API 互不关联 |
 | [qianxin (鹰图平台)](https://hunter.qianxin.com/) |       ✔       | API <b>每日</b>支持查询 <b>500</b> 条数据，但网页查询也会扣除积分 |
-|                      censys                       |       ✔       | API<b>每月</b>支持查询<b>250</b>条数据，但网页查询也会扣除积分 |
+| [censys](https://search.censys.io/)              |       ✔       | API<b>每月</b>支持查询<b>250</b>条数据，但网页查询也会扣除积分 |
 |  [360uake](https://quake.360.net/quake/#/index)   |       ✔       |       API 每月支持<b>3000</b>条数据，网页查询不扣积分        |
 
 ## 项目模块
@@ -47,13 +46,13 @@ NoMoney 是一款信息收集的工具，其中集成了fofa，zoomeye(钟馗之
 
 - 克隆该仓库:
 
-```bash
+```shell
 git clone https://github.com/H-Limbus/NoMoney.git
 ```
 
 - 安装依赖（安装依赖之前切记更换国内镜像源，否则会特别慢）：
 
-```bash
+```shell
 pip3 install -r requirements.txt
 ```
 
@@ -65,7 +64,7 @@ pip3 install -r requirements.txt
 
 - 使用 -h 或者 --help 来查看相关功能
 
-```bash
+```shell
         ___           ___           ___           ___           ___           ___
        /__/\         /  /\         /__/\         /  /\         /__/\         /  /\          ___
        \  \:\       /  /::\       |  |::\       /  /::\        \  \:\       /  /:/_        /__/|
@@ -128,15 +127,16 @@ CURRENT_PATH = os.getcwd()
 
 - 我们可以查看不同平台的搜索语法规则：
 
-```bash
+```shell
 使用 python NoMoney.py -fr  或者  -f -r 
 ```
+![图片](https://user-images.githubusercontent.com/85352537/224474391-7e5e5e26-5334-4409-b616-f7ab4e387bd6.png)
 
-![image-20230311145547420](C:\Users\Limbus\AppData\Roaming\Typora\typora-user-images\image-20230311145547420.png)
+
 
 - 更新 fofa 和 zoomeye 的cookies ：
 
-```bash
+```shell
 python3 NoMoney.py -fU  或者  -zU
 # 网页会自动进行更新，会自动识别所要填的验证码
 # fofa 的验证码识别率较高，但是zoomeye 识别率很低，所以在识别错误几次之后会弹出验证码进行手动输入，这确保在无头模式下也可以手动输入
@@ -145,13 +145,13 @@ python3 NoMoney.py -fU  或者  -zU
 
 - 获取数据：
 
-```bash
+```shell
 python NoMoney.py -f 或者 -z 或者 -q 或者 -3 或者 -c 或者 -fzq3c （多平台查询）
 ```
 
 - 保存数据，可选择三种格式（txt  csv  json ，默认为 txt ）：
 
-```bash
+```shell
 python NoMoney.py -f -o filepath --format=txt
 ```
 
@@ -174,6 +174,4 @@ thanks to [sml2h3](https://github.com/sml2h3) for ddddocr
 ## License
 
 <img alt="GitHub" src="https://img.shields.io/github/license/jorhelp/Ingram">
-=======
-# NoMoney
->>>>>>> 979fec5ab4ed6a507f9205370616cde585445cb0
+

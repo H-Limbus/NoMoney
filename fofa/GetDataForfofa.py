@@ -17,7 +17,6 @@ from config.Config import CURRENT_PATH
 
 def GDFfofa(logger):
     try:
-
         # get the lastest cookies from fofa's cookies files
 
         with open(f'{CURRENT_PATH}\\fofa\\cookies.json', 'r') as f:

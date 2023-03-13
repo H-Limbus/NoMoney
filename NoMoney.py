@@ -61,3 +61,5 @@ def run():
         logger.error("program stopped unexpectedly.")
 
 
+if __name__ == '__main__':
+    run()

@@ -18,7 +18,7 @@ def GDFCensys(logger):
 
     # check whether to update api and screct
 
-    if checkAccount():
+    if checkAccount(logger):
         newCensys = CensysHosts()
         quota = newCensys.quota()
         restQuota = str(quota['allowance'] - quota['used'])
@@ -54,5 +54,9 @@ def GDFCensys(logger):
             logger.error('Updated failed, api wrong, please reacquire! ')
 
 
-def checkAccount():
-    return True if CensysHosts().account()['login'] == CENSYS_EMAIL else False
+def checkAccount(logger):
+	if CENSYS_EMAIL == "" or CENSYS_API == "" or CENSYS_SCRECT == "":
+		logger.error("censys is not fully configured.")
+		exit()
+	else:
+	    return True if CensysHosts().account()['login'] == CENSYS_EMAIL else False

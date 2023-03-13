@@ -31,7 +31,7 @@ async def GetBrowser(name):
         "ignoreHTTPSErrors": True,                                
         "headless": False,                                  # default headless mode
         # "devtools": True,                                 # whether open developer tools,default closed
-        'userDataDir': f'{CURRENT_PATH}/{name}/userdata',   # fofa,zoomeye logined information 
+        'userDataDir': f'{CURRENT_PATH}\\{name}\\userdata',   # fofa,zoomeye logined information 
         "args": ARGS})   
     page = await browser.newPage()
     await page.setViewport({'width': SCREEN_WIDTH, 'height': SCREEN_HEIGHT})
@@ -48,8 +48,11 @@ def UpdAPI(ConfirmedSet):
             logger.info(f' {i} no need update。')
             continue
         else:
-            page = asyncio.get_event_loop().run_until_complete(GetBrowser(i))
-            asyncio.get_event_loop().run_until_complete(globals()['Upd' + i](page))
+        	if (i=='fofa' and (FOFA_USER=='' or FOFA_PASS=='')) or (i=="zoomeye" and (ZOOMEYE_USER == '' or ZOOMEYE_PASS == '')):
+        		logger.error(f"{i}'s account or password is not configured! ")
+        	else:
+	            page = asyncio.get_event_loop().run_until_complete(GetBrowser(i))
+	            asyncio.get_event_loop().run_until_complete(globals()['Upd' + i](page))
 
 
 # fofa cookies update
@@ -77,8 +80,8 @@ async def Updfofa(page):
     await page.click('#fofa_service')
     await asyncio.sleep(2)
     getOcr = await page.J('#captcha_image')
-    await getOcr.screenshot(path=f'{CURRENT_PATH}/temp/TempFofaOCR.png')
-    qr = DecodeOCR(Image.open(f'{CURRENT_PATH}/temp/TempFofaOCR.png'))
+    await getOcr.screenshot(path=f'{CURRENT_PATH}\\temp\\TempFofaOCR.png')
+    qr = DecodeOCR(Image.open(f'{CURRENT_PATH}\\temp\\TempFofaOCR.png'))
     await page.type('.mod_tab > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > input:nth-child(1)', qr)
     await asyncio.sleep(2)
     await page.click('#rememberMe')
@@ -91,10 +94,10 @@ async def Updfofa(page):
                 await asyncio.sleep(2)
                 await page.type('#password', FOFA_PASS)
                 getOcr = await page.J('#captcha_image')
-                await getOcr.screenshot(path=f'{CURRENT_PATH}/temp/TempFofaOCR.png')
+                await getOcr.screenshot(path=f'{CURRENT_PATH}\\temp\\TempFofaOCR.png')
                 await page.type(
                     '.mod_tab > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > input:nth-child(1)',
-                    DecodeOCR(Image.open(f'{CURRENT_PATH}/temp/TempFofaOCR.png')))
+                    DecodeOCR(Image.open(f'{CURRENT_PATH}\\temp\\TempFofaOCR.png')))
                 await page.click('#rememberMe')
                 await page.click('.mod_but')
                 continue
@@ -103,7 +106,7 @@ async def Updfofa(page):
         except Exception as e:
             logger.error(e)
             break
-    os.remove(f'{CURRENT_PATH}/temp/TempFofaOCR.png')
+    os.remove(f'{CURRENT_PATH}\\temp\\TempFofaOCR.png')
     await asyncio.sleep(4)
     with open(f'{CURRENT_PATH}\\fofa\\cookies.json', 'w') as f:
         f.write(json.dumps(await page.cookies()))
@@ -123,7 +126,7 @@ async def Updzoomeye(page):
         page.on('request', lambda request: asyncio.ensure_future(intercept_request(request)))
         await page.goto('https://www.zoomeye.org/searchResult?q=WIFICAM')
         await asyncio.sleep(2)
-        with open(f'{CURRENT_PATH}/zoomeye/cookies.json', 'w') as f:
+        with open(f'{CURRENT_PATH}\\zoomeye\\cookies.json', 'w') as f:
             f.write(json.dumps(await page.cookies()))
             print("zoomeye's cookie have not expired!")
         return True
@@ -133,9 +136,9 @@ async def Updzoomeye(page):
     await page.type('div.form-group:nth-child(4) > input:nth-child(1)', ZOOMEYE_USER)
     await page.type('#inputPassword', ZOOMEYE_PASS)
     ca = await page.J('.captcha')
-    await ca.screenshot(path=f'{CURRENT_PATH}/temp/TempZoomeyeOCR.png')
+    await ca.screenshot(path=f'{CURRENT_PATH}\\temp\\TempZoomeyeOCR.png')
     await asyncio.sleep(2)
-    qr = DecodeOCR(Image.open(f'{CURRENT_PATH}/temp/TempZoomeyeOCR.png'))
+    qr = DecodeOCR(Image.open(f'{CURRENT_PATH}\\temp\\TempZoomeyeOCR.png'))
     await page.type('#id_captcha_1', qr)
     await asyncio.sleep(1)
     await page.click('.btn')
@@ -152,9 +155,9 @@ async def Updzoomeye(page):
         await asyncio.sleep(1)
         if tags.strip() == '请输入正确的验证码。' and i >= 0:
             ca = await page.J('.captcha')
-            await ca.screenshot(path=f'{CURRENT_PATH}/temp/TempZoomeyeOCR.png')
+            await ca.screenshot(path=f'{CURRENT_PATH}\\temp\\TempZoomeyeOCR.png')
             await asyncio.sleep(3)
-            await page.type('#id_captcha_1', DecodeOCR(Image.open(f'{CURRENT_PATH}/temp/TempZoomeyeOCR.png')))
+            await page.type('#id_captcha_1', DecodeOCR(Image.open(f'{CURRENT_PATH}\\temp\\TempZoomeyeOCR.png')))
             await asyncio.sleep(1)
             await page.click('.btn')
             await asyncio.sleep(1)
@@ -163,8 +166,8 @@ async def Updzoomeye(page):
         elif tags.strip() == '请输入正确的验证码。' and i < 0:
             logger.info('OCR identification failed')
             ca = await page.J('.captcha')
-            await ca.screenshot(path=f'{CURRENT_PATH}/temp/TempZoomeyeOCR.png')
-            Image.open(f'{CURRENT_PATH}/temp/TempZoomeyeOCR.png').show()
+            await ca.screenshot(path=f'{CURRENT_PATH}\\temp\\TempZoomeyeOCR.png')
+            Image.open(f'{CURRENT_PATH}\\temp\\TempZoomeyeOCR.png').show()
             captcha = input('please enter OCR: ')
             await page.type('#id_captcha_1', captcha)
             [proc.kill() for proc in psutil.process_iter() if proc.name() == 'Microsoft.Photos.exe']
@@ -189,4 +192,4 @@ def DecodeOCR(n):
 # packet capture of zoomeye
 async def intercept_request(request):
     if '/api/search?q=' in request.url:
-        open(f'{CURRENT_PATH}/zoomeye/cube.txt', 'w').write(request.headers['cube-authorization'])
+        open(f'{CURRENT_PATH}\\zoomeye\\cube.txt', 'w').write(request.headers['cube-authorization'])
