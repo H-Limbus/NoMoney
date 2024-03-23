@@ -1,0 +1,11 @@
+requests~=2.26.0
+lxml~=4.6.3
+prettytable~=3.6.0
+censys~=2.1.9
+pywin32~=303
+ddddocr~=1.4.7
+psutil~=5.9.1
+Pillow~=9.4.0
+pyppeteer~=1.0.2
+loguru~=0.6.0
+alive_progress~=3.0.1
