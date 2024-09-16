@@ -26,20 +26,14 @@ def whetherFileExist(outputPath):
 
 
 def createFilePath(outputPath):
-    if '/' in outputPath and '\\' in outputPath:
-        logger.error('file path error! ')
-        return
-    elif '//' or '\\' in outputPath:
+    if '//' in outputPath or '\\' in outputPath:
         outputPath = outputPath.replace('\\', '/').replace('//', '/').split('/')
     else:
         outputPath = outputPath.split('/')
-    if outputPath[0] is '.':
-        open('/'.join(outputPath), 'w').close()
-    else:
+    if outputPath[0] is not '.':
         path = ''
         for i in outputPath[:-1]:
             path += i + '/'
             if os.path.exists(path): continue
             else: os.makedirs(path)
-        open('/'.join(outputPath), 'w').close()
     return '/'.join(outputPath)

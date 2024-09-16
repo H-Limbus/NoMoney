@@ -19,44 +19,38 @@ from update.UpdateAPI import UpdAPI
 from config.Config import PLATES
 from config.logo import PrintLogo
 from fofa.GetDataForfofa import GDFfofa
-from zoomeye.GetDataForzoomeye import GDFzoomeye
 from qianxin.GetDataForqianxin import GDFqianxin
 from quake360.GetDataFor360quake import GDF360quake
-from Censys.GetDataForCensys import GDFCensys
 
 
 def run():
+
+    from config.log import MyLogger
+
+    PrintLogo()  # print program Logo
+    args = Parse()
+    ConfirmedSet = [i for i in PLATES if args[i]]  # parameters obtained from cleaning
     try:
-        PrintLogo()                                          # print program Logo 
-        args = Parse()                                          
-        ConfirmedSet = [i for i in PLATES if args[i]]        # parameters obtained from cleaning 
         if args['rules'] or args['UpdateCookie']:
-            if args['rules']:                                
-                PrintRule(ConfirmedSet)                      # print search syntax or rules
+            if args['rules']:
+                PrintRule(ConfirmedSet)            # print search syntax or rules
             if args['UpdateCookie']:
-                UpdAPI(ConfirmedSet)                         # update cookies for the selected platfrom
-        else:
-            from reports.checkfile import checkFile
+                UpdAPI(ConfirmedSet)               # update cookies for the selected platfrom
+            exit()
+        from reports.checkfile import checkFile
+        from reports import base
 
-            # check whether the file path exists and create file path
+        logger = MyLogger().Log()
+
+# check whether the file path exists and create file path
+
+        for name in ConfirmedSet:
+            data = globals()['GDF' + name](logger)     # Loop call to get data for xx (GDFxx) function
             outputPath, outputFileFormat = checkFile(args['output']), args['format']
-
-            for name in ConfirmedSet:
-
-                from config.log import MyLogger
-
-                logger = MyLogger().Log()
-                data = globals()['GDF'+name](logger)         # Loop call to get data for xx (GDFxx) function
-
-                from reports import base
-
-                base.BaseSaveData(outputPath, data, outputFileFormat, logger)   # save data
+            base.BaseSaveData(outputPath, data, outputFileFormat, logger)  # save data
 
     # when using ctrl+c to stop halfway
     except KeyboardInterrupt:
-
-        from config.log import MyLogger
-
         logger = MyLogger().Log()
         logger.error("program stopped unexpectedly.")
 

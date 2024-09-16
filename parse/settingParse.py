@@ -10,8 +10,6 @@ def Parse():
     parser = argparse.ArgumentParser(
         usage='No Money', description='Because I have no money, I have this script(The APIs of this script are all crawlers)')
     parser.add_argument('-f', '--fofa', help='fofa api', action='store_true')
-    parser.add_argument('-z', '--zoomeye', help='zoomeye api', action='store_true')
-    parser.add_argument('-c', '--Censys', help='censys api', action='store_true')
     parser.add_argument('-q', '--qianxin', help='yingtu api', action='store_true')
     parser.add_argument('-3', '--360-quake', help='360 api', action='store_true', dest='360quake')
     parser.add_argument('-U', '--UpdateCookie', help='update the cookie', action='store_true')

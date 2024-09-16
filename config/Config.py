@@ -4,88 +4,42 @@
 # @file    :  config.py
 
 import os
-import datetime
-from win32api import GetSystemMetrics
-
-
-date = datetime.datetime.now()
-
+from arrow import now
 
 #                                   """can change"""
 # =======================================================================================
 
-# fofa 账号密码
+# fofa 账号密码 | fofa's username and password
 FOFA_USER = ''
 FOFA_PASS = ''
-
-
-# zooyeye（钟馗之眼）账号密码
-ZOOMEYE_USER = ''
-ZOOMEYE_PASS = ''
-
 
 
 # qianxin（奇安信）api-key（登录之后就可以获取）
 QIANXIN_API_KEY = ''
 
 
-
 # 360_quake 的api（登录之后就可以获取）
 QUAKE_API = ''
 
 
-# censys的api（登录之后就可以获取）
-CENSYS_EMAIL = ''
-CENSYS_API = ''
-CENSYS_SCRECT = ''
-
-
-# 当前的路径
+# 当前的路径  | current_path
 CURRENT_PATH = os.getcwd()
 
-
+# PlayWright 的启动配置  | start settings
+browserHeadless = False
 
 
 #                     """Try not to modify"""
 #  ========================================================================
 # 当前脚本支持的平台
-PLATES = ['fofa', 'Censys', 'zoomeye', 'qianxin', '360quake']
+PLATES = ['fofa', 'qianxin', '360quake']
 
 
-
-# 一年的时间节点
-DEFAULT_START_TIME = str(int(date.strftime('%Y')) - 1) + date.strftime('-%m-%d')
-# 半年的时间节点
-ageHalfYearDate = (str(int(date.year) - 1) + '-' + ((str(date.month + 6) + '-') if date.month >= 4 else ('0' + str(date.month + 6) + '-')) + str(date.day)) if (date.month - 6 <= 0) else (str(date.year) + '-' + '0' + str(date.month - 6) + '-' + (str(date.day) if date.day >= 10 else '0' + str(date.day)))
-# 一个月的时间节点
-ageOneMonthDate = (str(int(date.strftime('%Y')) - 1) + '-12-' + str(date.day)) if (date.month - 1 <= 0) else (date.strftime('%Y-') + (str(date.month - 1) if date.month >= 10 else '0' + str(date.month - 1)) + '-' + (str(date.day) if date.day >= 10 else '0' + str(date.day)))
-# 查询结束时间
-DEFAULT_END_TIME = date.strftime('%Y-%m-%d')
-
-
-
-# 设置屏幕的长宽
-SCREEN_WIDTH = GetSystemMetrics(0)
-SCREEN_HEIGHT = GetSystemMetrics(1)
-
-
-
-# pyppeteer 的参数设置，改之前可以先了解一下，以免出现问题
-ARGS = [
-    '--disable-extensions',                                 #  禁用扩展插件
-    '--hide-scrollbars',                                    #  隐藏滚动条
-    '--disable-bundled-ppapi-flash',                        #  禁用flash
-    '--mute-audio',                                         #  静音模式
-    '--no-sandbox',                                         #  启用沙盒，关闭沙盒可能有危害
-    '--disable-setuid-sandbox',
-    # '--disable-gpu',                                      #  不使用gpu
-    # f'--window-size={SCREEN_WIDTH},{SCREEN_HEIGHT}',      #  设置界面
-    '--disable-infobars',
-    '--disable-blink-features=AutomationControlled',        # 新版谷歌浏览器，绕过检测参数配置
-    '--start-maximized'
-]
-
-
-
-
-
+# 一年的时间节点  |  one years ago
+DEFAULT_START_TIME = now().shift(years=-1).format("YYYY-MM-DD")
+# 半年的时间节点  |  half years ago
+ageHalfYearDate = now().shift(months=-6).format("YYYY-MM-DD")
+# 一个月的时间节点  |  one months ago
+ageOneMonthDate = now().shift(months=-1).format("YYYY-MM-DD")
+# 查询结束时间  |   current time
+DEFAULT_END_TIME = now().format("YYYY-MM-DD")

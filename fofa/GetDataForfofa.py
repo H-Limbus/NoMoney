@@ -9,6 +9,8 @@ use crawlers to collect data, and update the cookies.
 
 import json
 import base64
+from json import JSONDecodeError
+
 import requests
 from lxml import etree
 from alive_progress import alive_bar
@@ -21,10 +23,10 @@ def GDFfofa(logger):
 
         with open(f'{CURRENT_PATH}\\fofa\\cookies.json', 'r') as f:
             fp = json.loads(f.read())
-    except FileNotFoundError:
+    except (FileNotFoundError, JSONDecodeError):
         logger.error("fofa's cookies.json is missing, please try again after get it! ")
         exit()
-    cookies = '; '.join([item["name"] + "=" + item["value"] for item in fp])
+    cookies = '; '.join((i['name'] + '=' + i['value']) for i in fp['cookies'])
     headers = {
         'Host': 'fofa.info',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0',
@@ -51,7 +53,9 @@ def GDFfofa(logger):
                 logger.error("fofa's cookies lose efficacy, please reacquire.")
             else:
                 html = etree.HTML(page.text).xpath('//*[contains(@class, "hsxa-host")]/a/@href')
-                yield html
+                if len(html) == 0:
+                    logger.error("If you don't get any data, please check the query statement or update the cookies.")
+                    exit()
+                else:
+                    yield html
             bar()
-
-

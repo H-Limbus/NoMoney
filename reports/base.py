@@ -8,6 +8,7 @@ import csv
 
 
 def BaseSaveData(outputPath, data, outputFileFormat, logger):
+
     if outputFileFormat in ['txt', 'json', 'csv']:
         globals()[outputFileFormat+'Save'](outputPath, data)
     else:
@@ -17,9 +18,11 @@ def BaseSaveData(outputPath, data, outputFileFormat, logger):
 
 
 def txtSave(outputPath, data):
-    fp = open(outputPath, 'a+')
+    fp = open(outputPath, 'a+', encoding='utf-8')
     for i in data:
         for _ in i:
+            if "*" in _ or "违规数据" in _:
+                continue
             if 'https://' in _ or 'http://' in _:
                 _ = _.replace('https://', '').replace('http://', '')
                 fp.write(_.strip() + '\n')
@@ -29,9 +32,11 @@ def txtSave(outputPath, data):
 
 
 def jsonSave(outputPath, data):
-    fp = open(outputPath, 'a+')
+    fp = open(outputPath, 'a+', encoding='utf-8')
     for i in data:
         for _ in i:
+            if "*" in _ or "违规数据" in _:
+                continue
             if 'https://' in _ or 'http://' in _:
                 _ = _.replace('https://', '').replace('http://', '')
             if ':' in _:
@@ -50,6 +55,8 @@ def csvSave(outputPath, data):
         writer.writerow(header_list)
         for i in data:
             for _ in i:
+                if "*" in _ or "违规数据" in _:
+                    continue
                 if 'https://' in _ or 'http://' in _:
                     _ = _.replace('https://', '').replace('http://', '')
                 if ':' in _:
