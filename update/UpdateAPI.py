@@ -31,7 +31,7 @@ sys.stdout = originSysStdout
 
 def GetBrowser(playwright, name):
         browser = Playwright(playwright).chromium.launch_persistent_context(
-            headless=False,
+            headless=browserHeadless,
             args=["--start-maximized", "--disable-blink-features=AutomationControlled"],
             user_data_dir=f"{CURRENT_PATH}\\{name}\\userdata",
             no_viewport=True
