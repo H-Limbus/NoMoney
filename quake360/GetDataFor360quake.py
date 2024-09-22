@@ -44,17 +44,17 @@ def GDF360quake(logger):
 		getDataCount = input('1 data = 1 quota, how much data you need (q exit): ')
 		if getDataCount == 'q': exit()
 		if int(getDataCount) > 500:
-			logger.error('a maximum of 500 pieces of data can be queried at a time')
+			logger.error('a maximum of 500 pieces of data can be queried at a time.')
 			exit()
 		elif int(getDataCount) <= restCredit:
-				data['size'] = int(getDataCount)
-				page2 = RequestsRes(url, headers, data, logger)
-				if page2:
-					with alive_bar(unknown="stars", title="getting") as bar:
-						yield [i['ip'] + ':' + str(i['port']) for i in page2['data']]
-						bar()
-				else:
-					logger.error('Search for syntax errors')
+			data['size'] = int(getDataCount)
+			page2 = RequestsRes(url, headers, data, logger)
+			if page2:
+				with alive_bar(unknown="stars", title="getting") as bar:
+					yield [i['ip'] + ':' + str(i['port']) for i in page2['data']]
+					bar()
+			else:
+				exit()
 		elif int(getDataCount) > restCredit:
 			logger.error(f'the remaining quota month are not enough to query {getDataCount}t data, try again! ')
 			exit()
@@ -66,6 +66,6 @@ def GDF360quake(logger):
 def RequestsRes(url, headers, data, logger):
 	page = requests.post(url, headers=headers, json=data).json()
 	if page['code'] != 0:
-		logger.info('code: '+ page['code'] + '\t' + 'message' + page['message'])
+		logger.error('code: '+ page['code'] + '\t' + 'message' + page['message'])
 		return False
 	return page
